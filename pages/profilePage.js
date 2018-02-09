@@ -10,7 +10,7 @@ class ProfilePage extends Component {
         return (
             <View style={styles.container}>
                 <TouchableHighlight underlayColor="transparent" onPress={() => { navigate('LoginPage') }}>
-                    <Text>go to profile page</Text>
+                    <Text>profile page</Text>
                 </TouchableHighlight>
             </View>
         );

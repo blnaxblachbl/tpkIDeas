@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { RkButton } from 'react-native-ui-kitten'
 
 class FeedPage extends Component {
     static navigationOptions = {
@@ -10,8 +11,9 @@ class FeedPage extends Component {
         return (
             <View style={styles.container}>
                 <TouchableHighlight underlayColor="transparent" onPress={() => { navigate('LoginPage') }}>
-                    <Text>go to feed page</Text>
+                    <Text>feed page</Text>
                 </TouchableHighlight>
+                <RkButton rkType='success'>Accept</RkButton>
             </View>
         );
     }

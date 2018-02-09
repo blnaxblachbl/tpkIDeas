@@ -10,7 +10,7 @@ class IdeasPage extends Component {
         return (
             <View style={styles.container}>
                 <TouchableHighlight underlayColor="transparent" onPress={() => { navigate('LoginPage') }}>
-                    <Text>go to ideas page</Text>
+                    <Text>ideas page</Text>
                 </TouchableHighlight>
             </View>
         );
