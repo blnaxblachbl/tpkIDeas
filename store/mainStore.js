@@ -9,10 +9,7 @@ export default class Store {
     { name: "kynat", secondName: "okoneshnikov" }
   ];
 
-  @action addItem = (name) => {
-    this.array.unshift({
-      name: name,
-      id: Date.now()
-    })
+  @action navigateFunc = (name) => {
+    alert(name)
   }
 }
