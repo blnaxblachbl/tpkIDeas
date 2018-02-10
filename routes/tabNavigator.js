@@ -5,6 +5,7 @@ import Feed from '../pages/feedPage'
 import Ideas from '../pages/ideasPage'
 import Profile from '../pages/profilePage'
 import OtherProfile from '../pages/otherProfilePage'
+import FeedInfo from '../pages/feedInfo'
 
 const FeedStack = StackNavigator({
     FeedStackFeed: {
@@ -15,6 +16,12 @@ const FeedStack = StackNavigator({
     },
     FeedStackProfile: {
         screen: Profile,
+        navigationOptions: {
+            header: null
+        }
+    },
+    FeedStackFeedInfo: {
+        screen: FeedInfo,
         navigationOptions: {
             header: null
         }
