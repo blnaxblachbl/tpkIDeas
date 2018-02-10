@@ -33,7 +33,10 @@ class RegistrationPage extends Component {
                             surname: this.state.surname,
                             username: this.state.email.split('@')[0]
                         }).then((res) => {
-                            this.props.navigation.navigate('Tabs')
+                            AsyncStorage.setItem('uid', data.uid )
+                            .then(()=>{
+                                this.props.navigation.navigate('Tabs')
+                            })
                         })
                     })
                     .catch(function (error) {

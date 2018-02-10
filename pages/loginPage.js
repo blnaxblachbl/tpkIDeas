@@ -24,9 +24,6 @@ class LoginPage extends Component {
                     .then(()=>{
                         this.props.navigation.navigate('Tabs')
                     })
-                    .catch(function (error) {
-                        alert(error)
-                    })
                 })
                 .catch(function (error) {
                     alert(JSON.stringify(error))
