@@ -25,6 +25,11 @@ class ProfilePage extends Component {
         }
     }
 
+    search = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Search')
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -70,6 +75,10 @@ class ProfilePage extends Component {
         } else {
             this.setState({ contentFullVisible: true })
         }
+        this.props.navigation.setParams({
+            handleSearch: this.search,
+            handleAdd: this.add
+        });
     }
 
     fullContent = () => {
@@ -101,7 +110,7 @@ class ProfilePage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("ProfileStackIdeaInfo", { img: item.img, name: item.header, content: item.content }) }}>
+        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.img, name: item.header, content: item.content }) }}>
             <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>

@@ -5,9 +5,6 @@ import { RkCard } from 'react-native-ui-kitten';
 const window = Dimensions.get('window');
 
 class IdeaInfo extends Component {
-    static navigationOptions = {
-        header: null
-    }
     constructor(props) {
         super(props)
         this.state = {

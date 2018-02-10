@@ -24,6 +24,18 @@ class IdeasPage extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.navigation.setParams({
+            handleSearch: this.search,
+            handleAdd: this.add
+        });
+    }
+
+    search = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Search')
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -63,7 +75,7 @@ class IdeasPage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeasStackIdeaInfo", { img: item.img, name: item.header, content: item.content }) }}>
+        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.img, name: item.header, content: item.content }) }}>
             <RkCard style={{ margin: 5, height: 150, width: 200, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: 150, width: 200, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>
