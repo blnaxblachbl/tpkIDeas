@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
 import { RkCard, RkButton } from 'react-native-ui-kitten';
+
+const window = Dimensions.get('window');
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -67,7 +69,6 @@ class ProfilePage extends Component {
                         <RkButton rkType='outline' style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
                             Редактировать
                         </RkButton>
-
                     </View>
                 </View>
                 <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
@@ -80,17 +81,16 @@ class ProfilePage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <RkCard style={{ marginBottom: 10 }}>
-            <View rkCardHeader>
-                <Text>{item.header}</Text>
-            </View>
-            <Image rkCardImg source={{ uri: item.img }} />
-            <View rkCardContent>
-                <Text>{item.content}</Text>
-            </View>
-            <View rkCardFooter>
-                <Text>{item.footer}</Text>
-            </View>
+        <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
+            <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                <View style={{ flexDirection: 'column' }} rkCardHeader>
+                    <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
+                    <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
+                </View>
+                <View rkCardFooter>
+                    <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                </View>
+            </ImageBackground>
         </RkCard>
     );
 
