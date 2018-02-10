@@ -81,17 +81,19 @@ class ProfilePage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
-            <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
-                <View style={{ flexDirection: 'column' }} rkCardHeader>
-                    <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
-                    <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
-                </View>
-                <View rkCardFooter>
-                    <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
-                </View>
-            </ImageBackground>
-        </RkCard>
+        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("ProfileStackIdeaInfo", { img: item.img, name: item.header, content: item.content }) }}>
+            <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
+                <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                    <View style={{ flexDirection: 'column' }} rkCardHeader>
+                        <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
+                        <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
+                    </View>
+                    <View rkCardFooter>
+                        <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                    </View>
+                </ImageBackground>
+            </RkCard>
+        </TouchableHighlight>
     );
 
     render() {

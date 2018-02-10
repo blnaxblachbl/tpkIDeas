@@ -7,6 +7,7 @@ import Registration from '../pages/registrationPage';
 import Search from '../pages/searchPage';
 import AddIdea from '../pages/addIdeaPage';
 import OtherProfile from '../pages/otherProfilePage'
+import IdeaInfo from '../pages/ideaInfo'
 
 const stackNavigatorConfig = {
     initialRouteName: 'CheckPage',
@@ -33,5 +34,8 @@ export default StackNavigator({
     },
     OtherProfile: {
         screen: OtherProfile,
+    },
+    IdeaInfo: {
+        screen: IdeaInfo
     }
 }, stackNavigatorConfig);
