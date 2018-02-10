@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, TouchableHighlight, Image, SectionList, ImageBackground, Dimensions } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 const window = Dimensions.get('window');
 
 class FeedInfo extends Component {
-    static navigationOptions = {
-        header: null
-    }
     constructor(props) {
         super(props)
         this.state = {

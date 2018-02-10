@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Image, SectionList, ImageBackground, Dimensions } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 const window = Dimensions.get('window');
 
 class FeedPage extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
+            headerTitle: (
+                <Image resizeMode="contain" style={{ height: 30, width: "50%", alignSelf: 'center' }} source={require("../assets/Logo.png")} />
+            ),
+            headerTitleStyle: {
+                alignSelf: "center"
+            },
+            headerLeft: (
+                <Icon name="search" style={{ marginLeft: 15 }} size={30} color={"black"} onPress={() => params.handleSearch()} />
+            ),
+            headerRight: (
+                //<Icon name="plus" style={{ marginRight: 15 }} size={30} color={"black"} onPress={() => params.handleAdd()} />
+                <View style={{ marginRight: 15, backgroundColor: "transparent", width: 30 }} />
+            )
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -53,8 +73,20 @@ class FeedPage extends Component {
 
     keyExtractor = (item, index) => item.id;
 
+    componentDidMount() {
+        this.props.navigation.setParams({
+            handleSearch: this.search,
+            handleAdd: this.add
+        });
+    }
+
+    search = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Search')
+    }
+
     renderItem = ({ item }) => (
-        <TouchableHighlight onPress={()=>{this.props.navigation.navigate("FeedStackFeedInfo",{img: item.img, name: item.content, footer: item.footer})}}>
+        <TouchableHighlight onPress={() => { this.props.navigation.navigate("FeedStackFeedInfo", { img: item.img, name: item.content, footer: item.footer }) }}>
             <RkCard style={{ marginBottom: 10, height: window.height / 1.7, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 1.7, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>
@@ -66,7 +98,7 @@ class FeedPage extends Component {
                     </View>
                 </ImageBackground>
             </RkCard>
-        </TouchableHighlight> 
+        </TouchableHighlight>
     );
 
     render() {
