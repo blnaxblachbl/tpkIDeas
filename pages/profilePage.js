@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, FlatList, Image } from 'react-native';
-import { RkCard } from 'react-native-ui-kitten';
+import { RkCard, RkButton } from 'react-native-ui-kitten';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -35,21 +35,44 @@ class ProfilePage extends Component {
                     footer: 'Idea footer',
                     img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
                 }
-            ]
+            ],
+            profilrHeaderHeight: 300,
+            profileContent: "Обо мне лофытвлофытволфытволфытвдлтфылвдфыдвьфылвьфывьфылдвaskdmaskldmaskdmasmdasmkdmkaslmdaskmdkasmldaslkdmaskldmaskldmlasmdlasmdasmdamsdlmaslaksmdьфыдлвьфыдлвьфылдвьдфыльвдфыьвдфыьвдфьльфыв флыдьвдфыьвлфыьв ьфлвьфы львфьы лвьфдылв",
+            contentFullVisible: true
         };
+    }
+
+    componentDidMount() {
+        if (this.state.profileContent.length > 150) {
+            this.setState({ contentFullVisible: false })
+        } else {
+            this.setState({ contentFullVisible: true })
+        }
+    }
+
+    fullContent = () => {
+        if (this.state.profileContent.length > 150) {
+            this.setState({ contentFullVisible: !this.state.contentFullVisible })
+        }
     }
 
     renderHeader = () => {
         return (
-            <View>
+            <View style={{ height: "auto" }}>
                 <View style={styles.profileHeader}>
-                    <Image style={{ height: 75, width: 75, borderRadius: 35 }} source={{ uri: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg' }} />
-                    <View>
-                        <Text style={{margin: 10, fontSize: 14}}>My name, my surname</Text>
-                        <Text style={{margin: 10, fontSize: 14}}>My specialization</Text>
+                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg' }} />
+                    <View style={{ justifyContent: 'center' }}>
+                        <Text style={{ marginLeft: 10, fontSize: 14 }}>My name, my surname</Text>
+                        <Text style={{ marginLeft: 10, fontSize: 14 }}>My specialization</Text>
+                        <RkButton rkType='outline' style={{ marginLeft: 10, height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
+                            Редактировать
+                        </RkButton>
+
                     </View>
                 </View>
-                <Text style={{margin: 10, fontSize: 14}}>My ideas</Text>
+                <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
+                <Text onPress={() => { this.fullContent() }} style={{ margin: 10, fontSize: 14 }}>{!this.state.contentFullVisible ? this.state.profileContent.slice(0, 150) + " [Еще...]" : this.state.profileContent}</Text>
+                <Text style={{ margin: 10, fontSize: 14, fontWeight: "bold" }}>Мои идеи</Text>
             </View>
         )
     }
@@ -81,7 +104,7 @@ class ProfilePage extends Component {
                 keyExtractor={this.keyExtractor}
                 ListHeaderComponent={this.renderHeader}
                 renderItem={this.renderItem}
-                containerStyle={{ marginBottom: 50 }}
+                ccontentContainerStyle={{ marginBottom: 50 }}
             />
         );
     }
@@ -92,14 +115,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         padding: 10,
+        paddingBottom: 50
     },
     profileHeader: {
         backgroundColor: '#fff',
         flexDirection: "row",
         width: "100%",
-        height: 250,
         justifyContent: 'space-around',
-
+        marginTop: 25
     }
 });
 
