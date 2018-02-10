@@ -74,6 +74,19 @@ export const Tabs = TabNavigator({
     },
 },
     {
+        tabBarOptions: {
+            showIcon: true,
+            showLabel: true,
+            inactiveTintColor: "#babdc2",
+            activeTintColor: "#000",
+            style: {
+                backgroundColor: "#f8f8f8",
+                justifyContent: "center"
+            },
+            indicatorStyle: {
+                height: 0
+            }
+        },
         tabBarPosition: 'bottom',
         swipeEnabled: false
     }

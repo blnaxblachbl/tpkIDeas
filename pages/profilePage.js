@@ -61,10 +61,10 @@ class ProfilePage extends Component {
             <View style={{ height: "auto" }}>
                 <View style={styles.profileHeader}>
                     <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg' }} />
-                    <View style={{ justifyContent: 'center' }}>
-                        <Text style={{ marginLeft: 10, fontSize: 14 }}>My name, my surname</Text>
-                        <Text style={{ marginLeft: 10, fontSize: 14 }}>My specialization</Text>
-                        <RkButton rkType='outline' style={{ marginLeft: 10, height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
+                    <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 14 }}>My name, my surname</Text>
+                        <Text style={{ fontSize: 14 }}>My specialization</Text>
+                        <RkButton rkType='outline' style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
                             Редактировать
                         </RkButton>
 
