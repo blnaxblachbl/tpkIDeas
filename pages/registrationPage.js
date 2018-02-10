@@ -4,7 +4,7 @@ import { RkTextInput, RkButton, RkAvoidKeyboard } from 'react-native-ui-kitten'
 
 class RegistrationPage extends Component {
     static navigationOptions = {
-        title: 'This is registration page',
+        title: 'Регистрация',
     }
 
     constructor(props) {
@@ -45,52 +45,62 @@ class RegistrationPage extends Component {
         const { navigate } = this.props.navigation
         return (
             <RkAvoidKeyboard style={styles.container}>
-                <View style={{ width: "75%" }}>
+                <View style={{ width: "80%", marginBottom: 30 }}>
                     <RkTextInput
+                        rkType='rounded'
                         onChangeText={(text) => { this.setState({ name: text }) }}
-                        placeholder='Email'
+                        placeholder='Почта'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
+                        style={{ height: 50 }}
                     />
                     <RkTextInput
+                        rkType='rounded'
                         onChangeText={(text) => { this.setState({ surname: text }) }}
-                        placeholder='Name'
+                        placeholder='Имя'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
+                        style={{ height: 50 }}
                     />
                     <RkTextInput
+                        rkType='rounded'
                         onChangeText={(text) => { this.setState({ password: text }) }}
-                        placeholder='Surname'
+                        placeholder='Фамилия'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
+                        style={{ height: 50 }}
                     />
                     <RkTextInput
+                        rkType='rounded'
                         onChangeText={(text) => { this.setState({ confitm: text }) }}
-                        placeholder='Password'
+                        placeholder='Пароль'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
+                        style={{ height: 50 }}
                         secureTextEntry={true}
                     />
                     <RkTextInput
-                        placeholder='Confitm password'
+                        rkType='rounded'
+                        placeholder='Подтвердите пароль'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
+                        style={{ height: 50 }}
                         secureTextEntry={true}
                     />
+                    <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.registration() }}>
+                        Зарегистрироваться
+                    </RkButton>
                 </View>
-                <RkButton style={{ marginTop: 15, width: "75%", backgroundColor: 'red' }} contentStyle={{ color: 'white' }} onPress={() => { this.registration() }}>
-                    Зарегистрироваться 
-                </RkButton>
             </RkAvoidKeyboard>
         );
     }
@@ -101,7 +111,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
     },
 });
 
