@@ -10,64 +10,37 @@ import IdeaInfo from '../pages/ideaInfo'
 
 const FeedStack = StackNavigator({
     FeedStackFeed: {
-        screen: Feed,
-        navigationOptions: {
-            header: null
-        }
+        screen: Feed
     },
     FeedStackProfile: {
-        screen: Profile,
-        navigationOptions: {
-            header: null
-        }
+        screen: Profile
     },
     FeedStackFeedInfo: {
-        screen: FeedInfo,
-        navigationOptions: {
-            header: null
-        }
+        screen: FeedInfo
     }
 })
 
 const IdeasStack = StackNavigator({
     IdeasStackIdeas: {
-        screen: Ideas,
-        navigationOptions: {
-            header: null
-        }
+        screen: Ideas
     },
     IdeasStackProfile: {
-        screen: Profile,
-        navigationOptions: {
-            header: null
-        }
+        screen: Profile
     },
     IdeasStackIdeaInfo: {
-        screen: IdeaInfo,
-        navigationOptions: {
-            header: null
-        }
+        screen: IdeaInfo
     }
 })
 
 const ProfileStack = StackNavigator({
     ProfileStackProfile: {
-        screen: Profile,
-        navigationOptions: {
-            header: null
-        }
+        screen: Profile
     },
     ProfileStackOtherProfile: {
-        screen: OtherProfile,
-        navigationOptions: {
-            header: null
-        }
+        screen: OtherProfile
     },
     ProfileStackIdeaInfo: {
-        screen: IdeaInfo,
-        navigationOptions: {
-            header: null
-        }
+        screen: IdeaInfo
     }
 })
 
