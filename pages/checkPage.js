@@ -14,7 +14,8 @@ class CheckPage extends Component {
             databaseURL: "https://idea-bag.firebaseio.com",
             projectId: "idea-bag",
             storageBucket: "idea-bag.appspot.com",
-            messagingSenderId: "183868654064"
+            messagingSenderId: "183868654064",
+            debug: true
         });
     }
 

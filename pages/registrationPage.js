@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Alert, ScrollView } from 'react-native';
 import { RkTextInput, RkButton, RkAvoidKeyboard } from 'react-native-ui-kitten'
+import firebase from 'firebase';
+import 'firebase/firestore'
+
 
 class RegistrationPage extends Component {
     static navigationOptions = {
@@ -14,14 +17,28 @@ class RegistrationPage extends Component {
             surname: "",
             password: "",
             confitm: "",
-            scrollPadding: 0
+            scrollPadding: 0,
+            email: '',
         }
     }
 
     registration = () => {
         if (this.state.name && this.state.surname && this.state.password && this.state.confitm) {
             if (this.state.password == this.state.confitm) {
-                this.props.navigation.navigate('Tabs')
+                firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+                    .then((data) => {
+                        let db = firebase.firestore()
+                        db.collection("users").doc(data.uid).set({
+                            name: this.state.name,
+                            surname: this.state.surname,
+                            username: this.state.email.split('@')[0]
+                        }).then((res) => {
+                            this.props.navigation.navigate('Tabs')
+                        })
+                    })
+                    .catch(function (error) {
+                        alert(JSON.stringify(error))
+                    })
             } else {
                 Alert.alert(
                     "IdeaBug",
@@ -49,7 +66,7 @@ class RegistrationPage extends Component {
                 <View style={styles.container}>
                     <RkTextInput
                         rkType='rounded'
-                        onChangeText={(text) => { this.setState({ name: text }) }}
+                        onChangeText={(text) => { this.setState({ email: text }) }}
                         placeholder='Почта'
                         inputStyle={{
                             backgroundColor: 'transparent',
@@ -61,7 +78,7 @@ class RegistrationPage extends Component {
                     />
                     <RkTextInput
                         rkType='rounded'
-                        onChangeText={(text) => { this.setState({ surname: text }) }}
+                        onChangeText={(text) => { this.setState({ name: text }) }}
                         placeholder='Имя'
                         inputStyle={{
                             backgroundColor: 'transparent',
@@ -73,7 +90,7 @@ class RegistrationPage extends Component {
                     />
                     <RkTextInput
                         rkType='rounded'
-                        onChangeText={(text) => { this.setState({ password: text }) }}
+                        onChangeText={(text) => { this.setState({ surname: text }) }}
                         placeholder='Фамилия'
                         inputStyle={{
                             backgroundColor: 'transparent',
@@ -85,7 +102,7 @@ class RegistrationPage extends Component {
                     />
                     <RkTextInput
                         rkType='rounded'
-                        onChangeText={(text) => { this.setState({ confitm: text }) }}
+                        onChangeText={(text) => { this.setState({ password: text }) }}
                         placeholder='Пароль'
                         inputStyle={{
                             backgroundColor: 'transparent',
@@ -98,6 +115,7 @@ class RegistrationPage extends Component {
                     />
                     <RkTextInput
                         rkType='rounded'
+                        onChangeText={(text) => { this.setState({ confitm: text }) }}
                         placeholder='Подтвердите пароль'
                         inputStyle={{
                             backgroundColor: 'transparent',

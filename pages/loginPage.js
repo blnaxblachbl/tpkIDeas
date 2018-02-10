@@ -19,17 +19,13 @@ class LoginPage extends Component {
 
     login = () => {
         if (this.state.login && this.state.password) {
-            this.props.navigation.navigate('Tabs')
-            /*
             firebase.auth().signInWithEmailAndPassword(this.state.login, this.state.password)
-                .fetch((data) => {
-                    alert(JSON.stringify(data))
+                .then((data) => {
+                    this.props.navigation.navigate('Tabs')
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    alert(JSON.stringify(error))
                 })
-                */
-
         } else {
             Alert.alert(
                 "IdeaBug",
@@ -46,41 +42,41 @@ class LoginPage extends Component {
         return (
             <ScrollView contentContainerStyle={{ paddingBottom: this.state.scrollPadding, alignItems: "center", justifyContent: "center" }} style={{ flex: 1, backgroundColor: '#fff' }}>
                 <View style={styles.container}>
-                        <RkTextInput
-                            rkType='rounded'
-                            onChangeText={(text) => { this.setState({ login: text }) }}
-                            placeholder='Почта'
-                            inputStyle={{
-                                backgroundColor: 'transparent',
-                                color: 'black',
-                            }}
-                            autoFocus={true}
-                            caretHidden={true}
-                            autoCorrect={false}
-                            style={{ height: 50 }}
-                            onFocus={() => { this.setState({ scrollPadding: 250 }) }}
-                            onBlur={() => { this.setState({ scrollPadding: 0 }) }}
-                        />
-                        <RkTextInput
-                            rkType='rounded'
-                            onChangeText={(text) => { this.setState({ password: text }) }}
-                            placeholder='Пароль'
-                            inputStyle={{
-                                backgroundColor: 'transparent',
-                                color: 'black',
-                            }}
-                            caretHidden={true}
-                            autoCorrect={false}
-                            secureTextEntry={true}
-                            style={{ height: 50 }}
-                            onFocus={() => { this.setState({ scrollPadding: 250 }) }}
-                            onBlur={() => { this.setState({ scrollPadding: 0 }) }}
-                        />
-                        <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.login() }}>
-                                Войти
+                    <RkTextInput
+                        rkType='rounded'
+                        onChangeText={(text) => { this.setState({ login: text }) }}
+                        placeholder='Почта'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        autoFocus={true}
+                        caretHidden={true}
+                        autoCorrect={false}
+                        style={{ height: 50 }}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                    />
+                    <RkTextInput
+                        rkType='rounded'
+                        onChangeText={(text) => { this.setState({ password: text }) }}
+                        placeholder='Пароль'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        caretHidden={true}
+                        autoCorrect={false}
+                        secureTextEntry={true}
+                        style={{ height: 50 }}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                    />
+                    <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.login() }}>
+                        Войти
                         </RkButton>
-                        <RkButton rkType='outline' style={{ height: 50, marginTop: 20, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { navigate('Registration') }}>
-                                Зарегистрироваться
+                    <RkButton rkType='outline' style={{ height: 50, marginTop: 20, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { navigate('Registration') }}>
+                        Зарегистрироваться
                         </RkButton>
                 </View>
             </ScrollView>
