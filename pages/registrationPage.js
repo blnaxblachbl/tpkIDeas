@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Alert, ScrollView } from 'react-native';
 import { RkTextInput, RkButton, RkAvoidKeyboard } from 'react-native-ui-kitten'
 
 class RegistrationPage extends Component {
@@ -13,7 +13,8 @@ class RegistrationPage extends Component {
             name: "",
             surname: "",
             password: "",
-            confitm: ""
+            confitm: "",
+            scrollPadding: 0
         }
     }
 
@@ -44,72 +45,85 @@ class RegistrationPage extends Component {
     render() {
         const { navigate } = this.props.navigation
         return (
-            <View style={styles.container}>
-                <RkTextInput
-                    rkType='rounded'
-                    onChangeText={(text) => { this.setState({ name: text }) }}
-                    placeholder='Почта'
-                    inputStyle={{
-                        backgroundColor: 'transparent',
-                        color: 'black',
-                    }}
-                    style={{ height: 50 }}
-                />
-                <RkTextInput
-                    rkType='rounded'
-                    onChangeText={(text) => { this.setState({ surname: text }) }}
-                    placeholder='Имя'
-                    inputStyle={{
-                        backgroundColor: 'transparent',
-                        color: 'black',
-                    }}
-                    style={{ height: 50 }}
-                />
-                <RkTextInput
-                    rkType='rounded'
-                    onChangeText={(text) => { this.setState({ password: text }) }}
-                    placeholder='Фамилия'
-                    inputStyle={{
-                        backgroundColor: 'transparent',
-                        color: 'black',
-                    }}
-                    style={{ height: 50 }}
-                />
-                <RkTextInput
-                    rkType='rounded'
-                    onChangeText={(text) => { this.setState({ confitm: text }) }}
-                    placeholder='Пароль'
-                    inputStyle={{
-                        backgroundColor: 'transparent',
-                        color: 'black',
-                    }}
-                    style={{ height: 50 }}
-                    secureTextEntry={true}
-                />
-                <RkTextInput
-                    rkType='rounded'
-                    placeholder='Подтвердите пароль'
-                    inputStyle={{
-                        backgroundColor: 'transparent',
-                        color: 'black',
-                    }}
-                    style={{ height: 50 }}
-                    secureTextEntry={true}
-                />
-                <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.registration() }}>
-                    Зарегистрироваться
+            <ScrollView contentContainerStyle={{ paddingBottom: this.state.scrollPadding, alignItems: "center" }} style={{ flex: 1, backgroundColor: '#fff' }}>
+                <View style={styles.container}>
+                    <RkTextInput
+                        rkType='rounded'
+                        onChangeText={(text) => { this.setState({ name: text }) }}
+                        placeholder='Почта'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                        style={{ height: 50 }}
+                    />
+                    <RkTextInput
+                        rkType='rounded'
+                        onChangeText={(text) => { this.setState({ surname: text }) }}
+                        placeholder='Имя'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        style={{ height: 50 }}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                    />
+                    <RkTextInput
+                        rkType='rounded'
+                        onChangeText={(text) => { this.setState({ password: text }) }}
+                        placeholder='Фамилия'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        style={{ height: 50 }}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                    />
+                    <RkTextInput
+                        rkType='rounded'
+                        onChangeText={(text) => { this.setState({ confitm: text }) }}
+                        placeholder='Пароль'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        style={{ height: 50 }}
+                        secureTextEntry={true}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                    />
+                    <RkTextInput
+                        rkType='rounded'
+                        placeholder='Подтвердите пароль'
+                        inputStyle={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        style={{ height: 50 }}
+                        secureTextEntry={true}
+                        onFocus={() => { this.setState({ scrollPadding: 250 }) }}
+                        onBlur={() => { this.setState({ scrollPadding: 0 }) }}
+                    />
+                    <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.registration() }}>
+                        Зарегистрироваться
                     </RkButton>
-            </View>
+                </View>
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        height: window.height,
+        width: "80%",
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
     },
 });
 
