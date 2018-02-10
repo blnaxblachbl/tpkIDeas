@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, ScrollView } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
 
 class IdeasPage extends Component {
@@ -42,39 +42,81 @@ class IdeasPage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <RkCard style={{ marginBottom: 10 }}>
-            <View rkCardHeader>
-                <Text>{item.header}</Text>
-            </View>
-            <Image rkCardImg source={{ uri: item.img }} />
-            <View rkCardContent>
-                <Text>{item.content}</Text>
-            </View>
-            <View rkCardFooter>
-                <Text>{item.footer}</Text>
-            </View>
+        <RkCard style={{ margin: 5, height: 150, width: 200, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
+            <ImageBackground style={{ justifyContent: 'space-between', height: 150, width: 200, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                <View style={{ flexDirection: 'column' }} rkCardHeader>
+                    <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
+                    <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
+                </View>
+                <View rkCardFooter>
+                    <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                </View>
+            </ImageBackground>
         </RkCard>
     );
 
     render() {
         const { navigate } = this.props.navigation
         return (
-            <FlatList
-                style={styles.container}
-                data={this.state.data}
-                extraData={this.state}
-                keyExtractor={this.keyExtractor}
-                renderItem={this.renderItem}
-                containerStyle={{ paddingBottom: 10 }}
-            />
+            <ScrollView style={{ backgroundColor: '#fff', flex: 1 }}>
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Интересное</Text>
+                <FlatList
+                    horizontal={true}
+                    style={styles.container}
+                    data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderItem}
+                    showsHorizontalScrollIndicator={false}
+                />
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Свежее</Text>
+                <FlatList
+                    horizontal={true}
+                    style={styles.container}
+                    data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderItem}
+                    showsHorizontalScrollIndicator={false}
+                />
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Дизайн</Text>
+                <FlatList
+                    horizontal={true}
+                    style={styles.container}
+                    data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderItem}
+                    showsHorizontalScrollIndicator={false}
+                />
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Игры</Text>
+                <FlatList
+                    horizontal={true}
+                    style={styles.container}
+                    data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderItem}
+                    showsHorizontalScrollIndicator={false}
+                />
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Бизнес</Text>
+                <FlatList
+                    horizontal={true}
+                    style={styles.container}
+                    data={this.state.data}
+                    extraData={this.state}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderItem}
+                    showsHorizontalScrollIndicator={false}
+                />
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10,
-        flex: 1,
+        padding: 5,
         backgroundColor: '#fff'
     },
 });
