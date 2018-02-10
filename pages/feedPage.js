@@ -9,7 +9,6 @@ class FeedPage extends Component {
             data: [
                 {
                     id: 0,
-<<<<<<< HEAD
                     header: 'Стартап дня',
                     content: 'Встречайте приложение на IOS',
                     footer: 'История создание нашего стартапа',
@@ -35,33 +34,6 @@ class FeedPage extends Component {
                     content: 'Встречайте приложение на IOS',
                     footer: 'История создание нашего стартапа',
                     img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
-=======
-                    header: 'News name',
-                    content: 'News content',
-                    footer: 'News footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 1,
-                    header: 'News name',
-                    content: 'News content',
-                    footer: 'News footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 2,
-                    header: 'News name',
-                    content: 'News content',
-                    footer: 'News footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 3,
-                    header: 'News name',
-                    content: 'News content',
-                    footer: 'News footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
->>>>>>> 78107aa6d73a96a33d8ecc9327534aedb1d25c42
                 }
             ]
         };
