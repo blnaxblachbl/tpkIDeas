@@ -1,13 +1,40 @@
 import React from 'react';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import Feed from '../pages/feedPage'
 import Ideas from '../pages/ideasPage'
 import Profile from '../pages/profilePage'
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export const Tabs = TabNavigator({
+const FeedStack = StackNavigator({
     Feed: {
         screen: Feed,
+        navigationOptions: {
+            header: null
+        }
+    }
+})
+
+const IdeasStack = StackNavigator({
+    Ideas: {
+        screen: Ideas,
+        navigationOptions: {
+            header: null
+        }
+    }
+})
+
+const ProfileStack = StackNavigator({
+    Profile: {
+        screen: Profile,
+        navigationOptions: {
+            header: null
+        }
+    }
+})
+
+export const Tabs = TabNavigator({
+    Feed: {
+        screen: FeedStack,
         navigationOptions: {
             tabBarLabel: 'Feed',
             tabBarIcon: ({ tintColor }) => (
@@ -16,7 +43,7 @@ export const Tabs = TabNavigator({
         },
     },
     Ideas: {
-        screen: Ideas,
+        screen: IdeasStack,
         navigationOptions: {
             tabBarLabel: 'Ideas',
             tabBarIcon: ({ tintColor }) => (
@@ -25,7 +52,7 @@ export const Tabs = TabNavigator({
         },
     },
     Profile: {
-        screen: Profile,
+        screen: ProfileStack,
         navigationOptions: {
             tabBarLabel: 'Profile',
             tabBarIcon: ({ tintColor }) => (

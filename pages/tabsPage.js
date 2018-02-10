@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 class TabsPage extends Component {
     static navigationOptions = {
         title: 'This is tab page',
+        headerLeft: null
     }
 
     render() {
