@@ -64,13 +64,16 @@ class ProfilePage extends Component {
                 }
             ],
             profilrHeaderHeight: 300,
-            profileContent: "Обо мне лофытвлофытволфытволфытвдлтфылвдфыдвьфылвьфывьфылдвaskdmaskldmaskdmasmdasmkdmkaslmdaskmdkasmldaslkdmaskldmaskldmlasmdlasmdasmdamsdlmaslaksmdьфыдлвьфыдлвьфылдвьдфыльвдфыьвдфыьвдфьльфыв флыдьвдфыьвлфыьв ьфлвьфы львфьы лвьфдылв",
-            contentFullVisible: true
+            about: "Обо мне лофытвлофытволфытволфытвдлтфылвдфыдвьфылвьфывьфылдвaskdmaskldmaskdmasmdasmkdmkaslmdaskmdkasmldaslkdmaskldmaskldmlasmdlasmdasmdamsdlmaslaksmdьфыдлвьфыдлвьфылдвьдфыльвдфыьвдфыьвдфьльфыв флыдьвдфыьвлфыьв ьфлвьфы львфьы лвьфдылв",
+            contentFullVisible: true,
+            name: "My name",
+            surname: "My surname",
+            specialization: "My specialization",
         };
     }
 
     componentDidMount() {
-        if (this.state.profileContent.length > 150) {
+        if (this.state.about.length > 150) {
             this.setState({ contentFullVisible: false })
         } else {
             this.setState({ contentFullVisible: true })
@@ -82,7 +85,7 @@ class ProfilePage extends Component {
     }
 
     fullContent = () => {
-        if (this.state.profileContent.length > 150) {
+        if (this.state.about.length > 150) {
             this.setState({ contentFullVisible: !this.state.contentFullVisible })
         }
     }
@@ -93,15 +96,15 @@ class ProfilePage extends Component {
                 <View style={styles.profileHeader}>
                     <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg' }} />
                     <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
-                        <Text style={{ fontSize: 14 }}>My name, my surname</Text>
-                        <Text style={{ fontSize: 14 }}>My specialization</Text>
-                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile') }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
+                        <Text style={{ fontSize: 14 }}>{this.state.name + " " + this.state.surname}</Text>
+                        <Text style={{ fontSize: 14 }}>{this.state.specialization}</Text>
+                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile',{img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg', name: this.state.name, surname: this.state.surname, about: this.state.about, specialization: this.state.specialization}) }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
                             Редактировать
                         </RkButton>
                     </View>
                 </View>
                 <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
-                <Text onPress={() => { this.fullContent() }} style={{ margin: 10, fontSize: 14 }}>{!this.state.contentFullVisible ? this.state.profileContent.slice(0, 150) + " [Еще...]" : this.state.profileContent}</Text>
+                <Text onPress={() => { this.fullContent() }} style={{ margin: 10, fontSize: 14 }}>{!this.state.contentFullVisible ? this.state.about.slice(0, 150) + " [Еще...]" : this.state.about}</Text>
                 <Text style={{ margin: 10, fontSize: 14, fontWeight: "bold" }}>Мои идеи</Text>
             </View>
         )
