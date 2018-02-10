@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 const window = Dimensions.get('window');
 
 class FeedInfo extends Component {
+    static navigationOptions = {
+        title: 'Новость'
+    }
     constructor(props) {
         super(props)
         this.state = {
