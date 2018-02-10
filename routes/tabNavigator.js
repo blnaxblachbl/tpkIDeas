@@ -6,6 +6,7 @@ import Ideas from '../pages/ideasPage'
 import Profile from '../pages/profilePage'
 import OtherProfile from '../pages/otherProfilePage'
 import FeedInfo from '../pages/feedInfo'
+import IdeaInfo from '../pages/ideaInfo'
 
 const FeedStack = StackNavigator({
     FeedStackFeed: {
@@ -40,6 +41,12 @@ const IdeasStack = StackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    IdeasStackIdeaInfo: {
+        screen: IdeaInfo,
+        navigationOptions: {
+            header: null
+        }
     }
 })
 
@@ -52,6 +59,12 @@ const ProfileStack = StackNavigator({
     },
     ProfileStackOtherProfile: {
         screen: OtherProfile,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ProfileStackIdeaInfo: {
+        screen: IdeaInfo,
         navigationOptions: {
             header: null
         }
