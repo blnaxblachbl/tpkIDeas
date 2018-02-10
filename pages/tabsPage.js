@@ -8,7 +8,7 @@ class TabsPage extends Component {
         const { params = {} } = navigation.state;
         return {
             headerTitle: (
-                <Image resizeMode="contain" style={{ height: 30 }} source={require("../assets/Logo.png")} />
+                <Image resizeMode="contain" style={{ height: 30, width: "50%", alignSelf: 'center' }} source={require("../assets/Logo.png")} />
             ),
             headerTitleStyle: {
                 alignSelf: "center"
