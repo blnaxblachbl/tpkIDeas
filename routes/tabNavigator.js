@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Feed from '../pages/feedPage'
 import Ideas from '../pages/ideasPage'
 import Profile from '../pages/profilePage'
+import OtherProfile from '../pages/otherProfilePage'
 
 const FeedStack = StackNavigator({
     FeedStackFeed: {
@@ -38,6 +39,12 @@ const IdeasStack = StackNavigator({
 const ProfileStack = StackNavigator({
     ProfileStackProfile: {
         screen: Profile,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ProfileStackOtherProfile: {
+        screen: OtherProfile,
         navigationOptions: {
             header: null
         }

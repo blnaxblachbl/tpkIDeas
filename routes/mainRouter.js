@@ -6,6 +6,7 @@ import Tabs from '../pages/tabsPage';
 import Registration from '../pages/registrationPage';
 import Search from '../pages/searchPage';
 import AddIdea from '../pages/addIdeaPage';
+import OtherProfile from '../pages/otherProfilePage'
 
 const stackNavigatorConfig = {
     initialRouteName: 'CheckPage',
@@ -29,5 +30,8 @@ export default StackNavigator({
     },
     AddIdea: {
         screen: AddIdea
+    },
+    OtherProfile: {
+        screen: OtherProfile,
     }
 }, stackNavigatorConfig);
