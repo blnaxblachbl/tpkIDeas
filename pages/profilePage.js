@@ -95,7 +95,7 @@ class ProfilePage extends Component {
                     <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 14 }}>My name, my surname</Text>
                         <Text style={{ fontSize: 14 }}>My specialization</Text>
-                        <RkButton rkType='outline' onPress={() => { this.props.lol.navigate('Search') }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
+                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile') }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
                             Редактировать
                         </RkButton>
                     </View>

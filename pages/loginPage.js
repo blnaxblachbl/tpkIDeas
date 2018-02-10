@@ -54,6 +54,7 @@ class LoginPage extends Component {
                                 backgroundColor: 'transparent',
                                 color: 'black',
                             }}
+                            autoFocus={true}
                             caretHidden={true}
                             autoCorrect={false}
                             style={{ height: 50 }}

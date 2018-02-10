@@ -9,6 +9,7 @@ import FeedInfo from '../pages/feedInfo'
 import IdeaInfo from '../pages/ideaInfo'
 import Search from '../pages/searchPage';
 import AddIdea from '../pages/addIdeaPage';
+import EditProfile from '../pages/editProfilePage';
 
 const FeedStack = StackNavigator({
     FeedStackFeed: {
@@ -79,6 +80,9 @@ const ProfileStack = StackNavigator({
     },
     IdeaInfoTab: {
         screen: IdeaInfo
+    },
+    EditProfile: {
+        screen: EditProfile
     }
 })
 
