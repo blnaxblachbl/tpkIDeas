@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import * as firebase from 'firebase';
 
 class CheckPage extends Component {
@@ -8,6 +8,7 @@ class CheckPage extends Component {
     }
 
     componentDidMount() {
+        const { navigate } = this.props.navigation
         firebase.initializeApp({
             apiKey: "AIzaSyDwqV2DunSWgJIhBA-prQ0H1A_ClFtWUps",
             authDomain: "idea-bag.firebaseapp.com",
@@ -17,27 +18,18 @@ class CheckPage extends Component {
             messagingSenderId: "183868654064",
             debug: true
         });
+        AsyncStorage.getItem('uid')
+        .then((data)=>{
+            navigate("Tabs")
+        })
+        .catch(function (error) {
+            navigate("LoginPage")
+        })
     }
 
     render() {
-        const { navigate } = this.props.navigation
-        return (
-            <View style={styles.container}>
-                <TouchableHighlight underlayColor="transparent" onPress={() => { navigate('LoginPage') }}>
-                    <Text>go to login page</Text>
-                </TouchableHighlight>
-            </View>
-        );
+        return null
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
 
 export default CheckPage;

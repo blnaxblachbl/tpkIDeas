@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions, AsyncStorage } from 'react-native';
 import { RkCard, RkButton } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import firebase from 'firebase';
+import 'firebase/firestore'
 
 const window = Dimensions.get('window');
 
@@ -82,6 +84,19 @@ class ProfilePage extends Component {
             handleSearch: this.search,
             handleAdd: this.add
         });
+        AsyncStorage.getItem('uid')
+        .then((data)=>{
+            //alert(data)
+        })
+        .catch(function (error) {
+            alert(error)
+        })
+        /*
+        firebase.firestore().collection("users").doc(user.uid).get()
+        .then((data)=>{
+            alert(JSON.stringify(data))
+        })
+        */
     }
 
     fullContent = () => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Alert, AsyncStorage } from 'react-native';
 import { RkTextInput, RkButton, RkAvoidKeyboard } from 'react-native-ui-kitten'
 import * as firebase from 'firebase';
 
@@ -20,7 +20,13 @@ class LoginPage extends Component {
         if (this.state.login && this.state.password) {
             firebase.auth().signInWithEmailAndPassword(this.state.login, this.state.password)
                 .then((data) => {
-                    this.props.navigation.navigate('Tabs')
+                    AsyncStorage.setItem('uid', data.uid )
+                    .then(()=>{
+                        this.props.navigation.navigate('Tabs')
+                    })
+                    .catch(function (error) {
+                        alert(error)
+                    })
                 })
                 .catch(function (error) {
                     alert(JSON.stringify(error))
