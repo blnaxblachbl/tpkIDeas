@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Image, FlatList, ImageBackground } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
 
 class FeedPage extends Component {
@@ -9,31 +9,31 @@ class FeedPage extends Component {
             data: [
                 {
                     id: 0,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
+                    header: 'Стартап дня',
+                    content: 'Встречайте приложение на IOS',
+                    footer: 'История создание нашего стартапа',
+                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
                 },
                 {
                     id: 1,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
+                    header: 'Стартап дня',
+                    content: 'Встречайте приложение на IOS',
+                    footer: 'История создание нашего стартапа',
+                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
                 },
                 {
                     id: 2,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
+                    header: 'Стартап дня',
+                    content: 'Встречайте приложение на IOS',
+                    footer: 'История создание нашего стартапа',
+                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
                 },
                 {
                     id: 3,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
+                    header: 'Стартап дня',
+                    content: 'Встречайте приложение на IOS',
+                    footer: 'История создание нашего стартапа',
+                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
                 }
             ]
         };
@@ -42,17 +42,16 @@ class FeedPage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <RkCard style={{ marginBottom: 10 }}>
-            <View rkCardHeader>
-                <Text>{item.header}</Text>
-            </View>
-            <Image rkCardImg source={{ uri: item.img }} />
-            <View rkCardContent>
-                <Text>{item.content}</Text>
-            </View>
-            <View rkCardFooter>
-                <Text>{item.footer}</Text>
-            </View>
+        <RkCard style={{ marginBottom: 10, height: 350, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden'}}>
+            <ImageBackground style={{ justifyContent: 'space-between', height: 350,  borderRadius: 20, overflow: 'hidden'}} source={{ uri: item.img }}>
+                <View style={{ flexDirection: 'column' }} rkCardHeader>
+                    <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
+                    <Text style={{ color: 'white', fontSize: 30  }}>{item.content}</Text>
+                </View>
+                <View rkCardFooter>
+                    <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                </View>
+            </ImageBackground>
         </RkCard>
     );
 
