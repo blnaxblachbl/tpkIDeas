@@ -5,7 +5,7 @@ import * as firebase from 'firebase';
 
 class LoginPage extends Component {
     static navigationOptions = {
-        title: 'Авторизация',
+        header: null
     }
 
     constructor(props) {
