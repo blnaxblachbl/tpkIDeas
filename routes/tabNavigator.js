@@ -68,7 +68,7 @@ export const Tabs = TabNavigator({
         navigationOptions: {
             tabBarLabel: 'Profile',
             tabBarIcon: ({ tintColor }) => (
-                <Icon name="user-circle-o" size={25} color={tintColor} />
+                <Icon name="user-circle-o" size={23} color={tintColor} />
             ),
         },
     },
