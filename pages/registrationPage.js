@@ -45,7 +45,7 @@ class RegistrationPage extends Component {
         const { navigate } = this.props.navigation
         return (
             <RkAvoidKeyboard style={styles.container}>
-                <View style={{ width: "80%", marginBottom: 30 }}>
+                <View style={{ width: "80%", paddingBottom: 30 }}>
                     <RkTextInput
                         rkType='rounded'
                         onChangeText={(text) => { this.setState({ name: text }) }}
