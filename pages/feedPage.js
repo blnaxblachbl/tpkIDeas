@@ -1,52 +1,64 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Image, FlatList, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Image, SectionList, ImageBackground, Dimensions } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
+
+const window = Dimensions.get('window');
 
 class FeedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
+            sectionData: [
                 {
-                    id: 0,
-                    header: 'Стартап дня',
-                    content: 'Встречайте приложение на IOS',
-                    footer: 'История создание нашего стартапа',
-                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                    title: 'Сегодня',
+                    data: [
+                        {
+                            id: 0,
+                            header: 'Стартап дня',
+                            content: 'Встречайте приложение на IOS',
+                            footer: 'История создание нашего стартапа',
+                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                        },
+                        {
+                            id: 1,
+                            header: 'Стартап дня',
+                            content: 'Встречайте приложение на IOS',
+                            footer: 'История создание нашего стартапа',
+                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                        }
+                    ]
                 },
                 {
-                    id: 1,
-                    header: 'Стартап дня',
-                    content: 'Встречайте приложение на IOS',
-                    footer: 'История создание нашего стартапа',
-                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
-                },
-                {
-                    id: 2,
-                    header: 'Стартап дня',
-                    content: 'Встречайте приложение на IOS',
-                    footer: 'История создание нашего стартапа',
-                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
-                },
-                {
-                    id: 3,
-                    header: 'Стартап дня',
-                    content: 'Встречайте приложение на IOS',
-                    footer: 'История создание нашего стартапа',
-                    img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                    title: '9 февраля',
+                    data: [
+                        {
+                            id: 3,
+                            header: 'Стартап дня',
+                            content: 'Встречайте приложение на IOS',
+                            footer: 'История создание нашего стартапа',
+                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                        },
+                        {
+                            id: 5,
+                            header: 'Стартап дня',
+                            content: 'Встречайте приложение на IOS',
+                            footer: 'История создание нашего стартапа',
+                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                        }
+                    ]
                 }
             ]
-        };
+        }
     }
 
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <RkCard style={{ marginBottom: 10, height: 350, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden'}}>
-            <ImageBackground style={{ justifyContent: 'space-between', height: 350,  borderRadius: 20, overflow: 'hidden'}} source={{ uri: item.img }}>
+        <RkCard style={{ marginBottom: 10, height: window.height / 1.7, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
+            <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 1.7, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
                 <View style={{ flexDirection: 'column' }} rkCardHeader>
                     <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
-                    <Text style={{ color: 'white', fontSize: 30  }}>{item.content}</Text>
+                    <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
                 </View>
                 <View rkCardFooter>
                     <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
@@ -58,12 +70,15 @@ class FeedPage extends Component {
     render() {
         const { navigate } = this.props.navigation
         return (
-            <FlatList
+            <SectionList
                 style={styles.container}
-                data={this.state.data}
+                sections={this.state.sectionData}
                 extraData={this.state}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
+                renderSectionHeader={
+                    ({section}) => <Text style={{fontSize: 30}}>{section.title}</Text>
+                }
                 containerStyle={{ paddingBottom: 10 }}
             />
         );
