@@ -44,64 +44,62 @@ class RegistrationPage extends Component {
     render() {
         const { navigate } = this.props.navigation
         return (
-            <RkAvoidKeyboard style={styles.container}>
-                <View style={{ width: "80%", paddingBottom: 30 }}>
-                    <RkTextInput
-                        rkType='rounded'
-                        onChangeText={(text) => { this.setState({ name: text }) }}
-                        placeholder='Почта'
-                        inputStyle={{
-                            backgroundColor: 'transparent',
-                            color: 'black',
-                        }}
-                        style={{ height: 50 }}
-                    />
-                    <RkTextInput
-                        rkType='rounded'
-                        onChangeText={(text) => { this.setState({ surname: text }) }}
-                        placeholder='Имя'
-                        inputStyle={{
-                            backgroundColor: 'transparent',
-                            color: 'black',
-                        }}
-                        style={{ height: 50 }}
-                    />
-                    <RkTextInput
-                        rkType='rounded'
-                        onChangeText={(text) => { this.setState({ password: text }) }}
-                        placeholder='Фамилия'
-                        inputStyle={{
-                            backgroundColor: 'transparent',
-                            color: 'black',
-                        }}
-                        style={{ height: 50 }}
-                    />
-                    <RkTextInput
-                        rkType='rounded'
-                        onChangeText={(text) => { this.setState({ confitm: text }) }}
-                        placeholder='Пароль'
-                        inputStyle={{
-                            backgroundColor: 'transparent',
-                            color: 'black',
-                        }}
-                        style={{ height: 50 }}
-                        secureTextEntry={true}
-                    />
-                    <RkTextInput
-                        rkType='rounded'
-                        placeholder='Подтвердите пароль'
-                        inputStyle={{
-                            backgroundColor: 'transparent',
-                            color: 'black',
-                        }}
-                        style={{ height: 50 }}
-                        secureTextEntry={true}
-                    />
-                    <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.registration() }}>
-                        Зарегистрироваться
+            <View style={styles.container}>
+                <RkTextInput
+                    rkType='rounded'
+                    onChangeText={(text) => { this.setState({ name: text }) }}
+                    placeholder='Почта'
+                    inputStyle={{
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                    }}
+                    style={{ height: 50 }}
+                />
+                <RkTextInput
+                    rkType='rounded'
+                    onChangeText={(text) => { this.setState({ surname: text }) }}
+                    placeholder='Имя'
+                    inputStyle={{
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                    }}
+                    style={{ height: 50 }}
+                />
+                <RkTextInput
+                    rkType='rounded'
+                    onChangeText={(text) => { this.setState({ password: text }) }}
+                    placeholder='Фамилия'
+                    inputStyle={{
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                    }}
+                    style={{ height: 50 }}
+                />
+                <RkTextInput
+                    rkType='rounded'
+                    onChangeText={(text) => { this.setState({ confitm: text }) }}
+                    placeholder='Пароль'
+                    inputStyle={{
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                    }}
+                    style={{ height: 50 }}
+                    secureTextEntry={true}
+                />
+                <RkTextInput
+                    rkType='rounded'
+                    placeholder='Подтвердите пароль'
+                    inputStyle={{
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                    }}
+                    style={{ height: 50 }}
+                    secureTextEntry={true}
+                />
+                <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.registration() }}>
+                    Зарегистрироваться
                     </RkButton>
-                </View>
-            </RkAvoidKeyboard>
+            </View>
         );
     }
 }
