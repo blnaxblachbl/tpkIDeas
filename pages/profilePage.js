@@ -71,6 +71,9 @@ class ProfilePage extends Component {
             name: "My name",
             surname: "My surname",
             specialization: "My specialization",
+            status: "",
+            about: "",
+            photo: ""
         };
     }
 
@@ -85,18 +88,22 @@ class ProfilePage extends Component {
             handleAdd: this.add
         });
         AsyncStorage.getItem('uid')
-        .then((data)=>{
-            //alert(data)
-        })
-        .catch(function (error) {
-            alert(error)
-        })
-        /*
-        firebase.firestore().collection("users").doc(user.uid).get()
-        .then((data)=>{
-            alert(JSON.stringify(data))
-        })
-        */
+            .then((uid)=>{
+                if (uid != null) {
+                    firebase.firestore().collection("users").doc(uid).get()
+                    .then((data)=>{
+                        let json = data.data()
+                        this.setState({
+                            name: json.name,
+                            surname: json.surname,
+                            specialization: json.spels,
+                            status: json.status,
+                            about: json.about,
+                            photo: json.photo,
+                        })
+                    })
+                }
+            })
     }
 
     fullContent = () => {

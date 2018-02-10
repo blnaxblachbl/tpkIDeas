@@ -20,10 +20,11 @@ class CheckPage extends Component {
         });
         AsyncStorage.getItem('uid')
         .then((data)=>{
-            navigate("Tabs")
-        })
-        .catch(function (error) {
-            navigate("LoginPage")
+            if(data != null) {
+                navigate("Tabs")
+            } else {
+                navigate("LoginPage")
+            }
         })
     }
 
