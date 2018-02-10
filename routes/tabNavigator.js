@@ -1,13 +1,19 @@
 import React from 'react';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Feed from '../pages/feedPage'
 import Ideas from '../pages/ideasPage'
 import Profile from '../pages/profilePage'
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 const FeedStack = StackNavigator({
-    Feed: {
+    FeedStackFeed: {
         screen: Feed,
+        navigationOptions: {
+            header: null
+        }
+    },
+    FeedStackProfile: {
+        screen: Profile,
         navigationOptions: {
             header: null
         }
@@ -15,8 +21,14 @@ const FeedStack = StackNavigator({
 })
 
 const IdeasStack = StackNavigator({
-    Ideas: {
+    IdeasStackIdeas: {
         screen: Ideas,
+        navigationOptions: {
+            header: null
+        }
+    },
+    IdeasStackProfile: {
+        screen: Profile,
         navigationOptions: {
             header: null
         }
@@ -24,7 +36,7 @@ const IdeasStack = StackNavigator({
 })
 
 const ProfileStack = StackNavigator({
-    Profile: {
+    ProfileStackProfile: {
         screen: Profile,
         navigationOptions: {
             header: null
@@ -63,5 +75,6 @@ export const Tabs = TabNavigator({
 },
     {
         tabBarPosition: 'bottom',
+        swipeEnabled: false
     }
 );
