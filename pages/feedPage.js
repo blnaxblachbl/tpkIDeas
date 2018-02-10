@@ -17,14 +17,14 @@ class FeedPage extends Component {
                             header: 'Стартап дня',
                             content: 'Встречайте приложение на IOS',
                             footer: 'История создание нашего стартапа',
-                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
                         },
                         {
                             id: 1,
                             header: 'Стартап дня',
                             content: 'Встречайте приложение на IOS',
                             footer: 'История создание нашего стартапа',
-                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
                         }
                     ]
                 },
@@ -36,14 +36,14 @@ class FeedPage extends Component {
                             header: 'Стартап дня',
                             content: 'Встречайте приложение на IOS',
                             footer: 'История создание нашего стартапа',
-                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
                         },
                         {
                             id: 5,
                             header: 'Стартап дня',
                             content: 'Встречайте приложение на IOS',
                             footer: 'История создание нашего стартапа',
-                            img: 'http://www.mobiloitte.com/blog/wp-content/uploads/2017/02/startup.jpg'
+                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
                         }
                     ]
                 }
@@ -71,13 +71,14 @@ class FeedPage extends Component {
         const { navigate } = this.props.navigation
         return (
             <SectionList
+                stickySectionHeadersEnabled={true}
                 style={styles.container}
                 sections={this.state.sectionData}
                 extraData={this.state}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderItem}
                 renderSectionHeader={
-                    ({section}) => <Text style={{fontSize: 30}}>{section.title}</Text>
+                    ({ section }) => <Text style={{ fontSize: 30 }}>{section.title}</Text>
                 }
                 containerStyle={{ paddingBottom: 10 }}
             />
