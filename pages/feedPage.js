@@ -86,7 +86,7 @@ class FeedPage extends Component {
     }
 
     renderItem = ({ item }) => (
-        <TouchableHighlight onPress={() => { this.props.navigation.navigate("FeedStackFeedInfo", { img: item.img, name: item.content, footer: item.footer }) }}>
+        <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate("FeedStackFeedInfo",{img: item.img, name: item.content, footer: item.footer})}}>
             <RkCard style={{ marginBottom: 10, height: window.height / 1.7, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 1.7, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, Image, ImageBackground, Dimensions } from 'react-native';
 import { RkCard, RkButton } from 'react-native-ui-kitten';
+
+const window = Dimensions.get('window');
 
 class OtherProfilePage extends Component {
     constructor(props) {
@@ -57,7 +59,7 @@ class OtherProfilePage extends Component {
     }
 
     renderHeader = () => {
-        const {params} = this.props.navigation.state
+        const { params } = this.props.navigation.state
         return (
             <View style={{ height: "auto" }}>
                 <View style={styles.profileHeader}>
@@ -81,18 +83,19 @@ class OtherProfilePage extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <RkCard style={{ marginBottom: 10 }}>
-            <View rkCardHeader>
-                <Text>{item.header}</Text>
-            </View>
-            <Image rkCardImg source={{ uri: item.img }} />
-            <View rkCardContent>
-                <Text>{item.content}</Text>
-            </View>
-            <View rkCardFooter>
-                <Text>{item.footer}</Text>
-            </View>
-        </RkCard>
+        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfo", { img: item.img, name: item.header, content: item.content }) }}>
+            <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
+                <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                    <View style={{ flexDirection: 'column' }} rkCardHeader>
+                        <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
+                        <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
+                    </View>
+                    <View rkCardFooter>
+                        <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                    </View>
+                </ImageBackground>
+            </RkCard>
+        </TouchableHighlight>
     );
 
     render() {
