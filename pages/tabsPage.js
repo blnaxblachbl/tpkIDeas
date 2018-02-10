@@ -4,19 +4,43 @@ import { StyleSheet, Text, View, TouchableHighlight, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 class TabsPage extends Component {
-    static navigationOptions = {
-        title: (
-            <Image source={require("../assets/Logo.png")}/>
-        ),
-        headerTitleStyle: {
-            alignSelf: "center"
-        },
-        headerLeft: (
-            <Icon name="search" style={{marginLeft: 15}} size={30} color={"black"}/>
-        ),
-        headerRight: (
-            <Icon name="plus" style={{marginRight: 15}} size={30} color={"black"}/>
-        )
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
+            headerTitle: (
+                <Image resizeMode="contain" style={{ height: 30 }} source={require("../assets/Logo.png")} />
+            ),
+            headerTitleStyle: {
+                alignSelf: "center"
+            },
+            headerLeft: (
+                <Icon name="search" style={{ marginLeft: 15 }} size={30} color={"black"} onPress={() => params.handleSearch()} />
+            ),
+            headerRight: (
+                <Icon name="plus" style={{ marginRight: 15 }} size={30} color={"black"} onPress={() => params.handleAdd()} />
+            )
+        }
+    }
+
+    constructor(props) {
+        super(props)
+    }
+
+    componentDidMount() {
+        this.props.navigation.setParams({
+            handleSearch: this.search,
+            handleAdd: this.add
+        });
+    }
+
+    add = () => {
+        const { navigate } = this.props.navigation;
+        navigate('AddIdea')
+    }
+
+    search = () => {
+        const { navigate } = this.props.navigation;
+        navigate('Search')
     }
 
     render() {
