@@ -1,33 +1,62 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions, ScrollView } from 'react-native';
 import { RkCard, RkButton, RkTextInput } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import { ImagePicker } from 'expo';
 
 const window = Dimensions.get('window');
 
 class ProfileEditPage extends Component {
-
+    static navigationOptions = {
+        title: 'Редактирование профиля'
+    }
     constructor(props) {
         super(props);
         this.state = {
             name: "",
             surname: "",
             specialization: "",
-            about: ""
+            about: "",
+            img: " "
+        }
+    }
+
+    componentDidMount() {
+        const { params } = this.props.navigation.state
+        this.setState({
+            name: params.name,
+            surname: params.surname,
+            specialization: params.specialization,
+            about: params.about,
+            img: params.img
+        })
+    }
+
+    pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+        });
+
+        if (!result.cancelled) {
+            this.setState({ img: result.uri });
+        } else {
+            alert("error")
         }
     }
 
     render() {
         const { navigate } = this.props.navigation
         return (
-            <View style={{ height: "auto" }}>
-                <View style={styles.profileHeader}>
-                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg' }} />
-                    <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
-                        <Text style={{ fontSize: 14 }}>My name, my surname</Text>
-                        <Text style={{ fontSize: 14 }}>My specialization</Text>
+            <ScrollView style={{ flex: 1, backgroundColor: "#fff", padding: 10, paddingBottom: 80 }}>
+                <TouchableHighlight onPress={() => { this.pickImage() }} underlayColor="transparent">
+                    <View style={styles.profileHeader}>
+                        <Image style={{ height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.img }} />
+                        <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 14 }}>Изменить фото профиля</Text>
+                        </View>
                     </View>
-                </View>
+                </TouchableHighlight>
                 <RkTextInput
                     rkType='rounded'
                     onChangeText={(text) => { this.setState({ name: text }) }}
@@ -36,8 +65,8 @@ class ProfileEditPage extends Component {
                         backgroundColor: 'transparent',
                         color: 'black',
                     }}
-                    caretHidden={true}
                     autoCorrect={false}
+                    value={this.state.name}
                     style={{ height: 50 }}
                 />
                 <RkTextInput
@@ -48,8 +77,8 @@ class ProfileEditPage extends Component {
                         backgroundColor: 'transparent',
                         color: 'black',
                     }}
-                    caretHidden={true}
                     autoCorrect={false}
+                    value={this.state.surname}
                     style={{ height: 50 }}
                 />
                 <RkTextInput
@@ -60,7 +89,7 @@ class ProfileEditPage extends Component {
                         backgroundColor: 'transparent',
                         color: 'black',
                     }}
-                    caretHidden={true}
+                    value={this.state.specialization}
                     autoCorrect={false}
                     style={{ height: 50 }}
                 />
@@ -72,12 +101,16 @@ class ProfileEditPage extends Component {
                     inputStyle={{
                         backgroundColor: 'transparent',
                         color: 'black',
+                        height: "auto",
                     }}
-                    caretHidden={true}
-                    autoCorrect={false}
-                    style={{ height: 400 }}
+                    value={this.state.about}
+                    multiline={true}
+                    style={{ borderRadius: 15, borderWidth: 0.3, borderBottomWidth: 0.3 }}
                 />
-            </View>
+                <RkButton rkType='outline' style={{ height: 50, marginTop: 20, marginBottom: 20, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
+                    Сохранить изменения
+                </RkButton>
+            </ScrollView>
         );
     }
 }
@@ -94,7 +127,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         justifyContent: 'space-around',
-        marginTop: 25
+        marginTop: 25,
+        marginBottom: 25
     }
 });
 
