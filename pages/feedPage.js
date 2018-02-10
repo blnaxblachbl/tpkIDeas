@@ -9,30 +9,30 @@ class FeedPage extends Component {
             data: [
                 {
                     id: 0,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
+                    header: 'News name',
+                    content: 'News content',
+                    footer: 'News footer',
                     img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
                 },
                 {
                     id: 1,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
+                    header: 'News name',
+                    content: 'News content',
+                    footer: 'News footer',
                     img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
                 },
                 {
                     id: 2,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
+                    header: 'News name',
+                    content: 'News content',
+                    footer: 'News footer',
                     img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
                 },
                 {
                     id: 3,
-                    header: 'lol',
-                    content: 'lol',
-                    footer: 'lol',
+                    header: 'News name',
+                    content: 'News content',
+                    footer: 'News footer',
                     img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
                 }
             ]
