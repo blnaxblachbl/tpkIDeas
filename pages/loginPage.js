@@ -16,14 +16,14 @@ class LoginPage extends Component {
     }
 
     login = () => {
-        if (this.state.login && this.state.password){
+        if (this.state.login && this.state.password) {
             this.props.navigation.navigate('Tabs')
-        }else{
+        } else {
             Alert.alert(
                 "IdeaBug",
                 "Заполните все поля",
                 [
-                    {text: 'OK', onPress: () => console.log('OK Pressed')},
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
                 ],
             )
         }
@@ -33,31 +33,35 @@ class LoginPage extends Component {
         const { navigate } = this.props.navigation
         return (
             <RkAvoidKeyboard style={styles.container}>
-                <View style={{ width: "75%" }}>
+                <View style={{ width: "75%", marginBottom: 40 }}>
                     <RkTextInput
+                        rkType='rounded large'
                         onChangeText={(text) => { this.setState({ login: text }) }}
                         placeholder='Email'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
+                        style={{ height: 50 }}
                     />
                     <RkTextInput
+                        rkType='rounded large'
                         onChangeText={(text) => { this.setState({ password: text }) }}
                         placeholder='Password'
                         inputStyle={{
-                            backgroundColor: 'white',
+                            backgroundColor: 'transparent',
                             color: 'black',
                         }}
                         secureTextEntry={true}
+                        style={{ height: 50 }}
                     />
+                    <RkButton rkType='outline' style={{ height: 50, marginTop: 10, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.login() }}>
+                        Sing in
+                    </RkButton>
+                    <RkButton rkType='outline' style={{ height: 50, marginTop: 20, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { navigate('Registration') }}>
+                        Sing up
+                    </RkButton>
                 </View>
-                <RkButton style={{ marginTop: 15, width: "75%", backgroundColor: 'red' }} contentStyle={{ color: 'white' }} onPress={() => { this.login() }}>
-                    Sing in
-                </RkButton>
-                <RkButton style={{ marginTop: 15, width: "75%", backgroundColor: 'red' }} contentStyle={{ color: 'white' }} onPress={() => { navigate('Registration') }}>
-                    Sing up
-                </RkButton>
             </RkAvoidKeyboard>
         );
     }
@@ -68,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
     },
 });
 
