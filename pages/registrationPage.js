@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Alert, ScrollView, AsyncStorage } from 'react-native';
 import { RkTextInput, RkButton, RkAvoidKeyboard } from 'react-native-ui-kitten'
 import firebase from 'firebase';
 import 'firebase/firestore'
@@ -27,8 +27,7 @@ class RegistrationPage extends Component {
             if (this.state.password == this.state.confitm) {
                 firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
                     .then((data) => {
-                        let db = firebase.firestore()
-                        db.collection("users").doc(data.uid).set({
+                        firebase.firestore().collection("users").doc(data.uid).set({
                             name: this.state.name,
                             surname: this.state.surname,
                             username: this.state.email.split('@')[0]
