@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, ScrollView, Image, RefreshControl } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import * as firebase from 'firebase';
+import 'firebase/firestore'
 
 class IdeasPage extends Component {
 
@@ -29,6 +31,7 @@ class IdeasPage extends Component {
             handleSearch: this.search,
             handleAdd: this.add
         });
+        this.getIdeas();
     }
 
     search = () => {
@@ -39,36 +42,12 @@ class IdeasPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    id: 0,
-                    header: 'Idea name',
-                    content: 'Idea content',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 1,
-                    header: 'Idea name',
-                    content: 'Idea contentlol',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 2,
-                    header: 'Idea name',
-                    content: 'Idea content',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 3,
-                    header: 'Idea name',
-                    content: 'Idea content',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                }
-            ]
+            interesting: [],
+            fresh: [],
+            design: [],
+            games: [],
+            business: [],
+            refreshing: false
         };
     }
 
@@ -77,48 +56,94 @@ class IdeasPage extends Component {
     renderItem = ({ item }) => (
         <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.img, name: item.header, content: item.content }) }}>
             <RkCard style={{ margin: 5, height: 150, width: 200, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
-                <ImageBackground style={{ justifyContent: 'space-between', height: 150, width: 200, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                <ImageBackground style={{ justifyContent: 'space-between', height: 150, width: 200, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.image }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>
-                        <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
-                        <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
-                    </View>
-                    <View rkCardFooter>
-                        <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>{item.title}</Text>
                     </View>
                 </ImageBackground>
             </RkCard>
         </TouchableHighlight>
     );
 
+    getIdeas = async () => {
+        this.setState({
+            games: [],
+            business: [],
+            design: [],
+            fresh: [],
+            interesting: [],
+            refreshing: true
+        })
+        try {
+            let db = firebase.firestore()
+            const querySnapshot = await db.collection("projects").get()
+            let arr = null
+            querySnapshot.forEach((doc) => {
+                arr = {
+                    ...doc.data(),
+                    id: doc.id
+                }
+                switch (arr.category) {
+                    case "Игры":
+                        this.state.games.push(arr)
+                        break;
+                    case "Сайт":
+                        this.state.interesting.push(arr)
+                        break;
+                    case "Приложение":
+                        this.state.fresh.push(arr)
+                        break;
+                    case "Другое":
+                        this.state.business.push(arr)
+                        break;
+                    default:
+                        break;
+                }
+            })
+            this.setState({
+                games: this.state.games,
+                business: this.state.business,
+                design: this.state.design,
+                fresh: this.state.fresh,
+                interesting: this.state.interesting,
+                refreshing: false
+            })
+            // console.log(JSON.stringify(arr.reverse()))
+        } catch (err) {
+            this.setState({refreshing: false})
+            alert('Произошла неизвестная ошибка. Попробуйте заново');
+            console.error(err)
+            return false
+        }
+    }
+
     render() {
         const { navigate } = this.props.navigation
         return (
-            <ScrollView style={{ backgroundColor: '#fff', flex: 1 }}>
-                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Интересное</Text>
+            <ScrollView
+                style={{ backgroundColor: '#fff', flex: 1 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.getIdeas.bind(this)}
+                    />
+                }
+            >
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Сайт</Text>
                 <FlatList
                     horizontal={true}
                     style={styles.container}
-                    data={this.state.data}
+                    data={this.state.interesting}
                     extraData={this.state}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderItem}
                     showsHorizontalScrollIndicator={false}
                 />
-                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Свежее</Text>
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Приложения</Text>
                 <FlatList
                     horizontal={true}
                     style={styles.container}
-                    data={this.state.data}
-                    extraData={this.state}
-                    keyExtractor={this.keyExtractor}
-                    renderItem={this.renderItem}
-                    showsHorizontalScrollIndicator={false}
-                />
-                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Дизайн</Text>
-                <FlatList
-                    horizontal={true}
-                    style={styles.container}
-                    data={this.state.data}
+                    data={this.state.fresh}
                     extraData={this.state}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderItem}
@@ -128,17 +153,17 @@ class IdeasPage extends Component {
                 <FlatList
                     horizontal={true}
                     style={styles.container}
-                    data={this.state.data}
+                    data={this.state.games}
                     extraData={this.state}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderItem}
                     showsHorizontalScrollIndicator={false}
                 />
-                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Бизнес</Text>
+                <Text style={{ marginLeft: 10, fontSize: 30, color: '#000' }}>Другое</Text>
                 <FlatList
                     horizontal={true}
                     style={styles.container}
-                    data={this.state.data}
+                    data={this.state.business}
                     extraData={this.state}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderItem}

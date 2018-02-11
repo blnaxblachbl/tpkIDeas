@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableHighlight, Image, SectionList, ImageBackground, Dimensions } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import * as firebase from 'firebase';
+import 'firebase/firestore'
 
 const window = Dimensions.get('window');
 
@@ -28,46 +30,8 @@ class FeedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sectionData: [
-                {
-                    title: 'Сегодня',
-                    data: [
-                        {
-                            id: 0,
-                            header: 'Стартап дня',
-                            content: 'Встречайте приложение на IOS',
-                            footer: 'История создание нашего стартапа',
-                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
-                        },
-                        {
-                            id: 1,
-                            header: 'Стартап дня',
-                            content: 'Встречайте приложение на IOS',
-                            footer: 'История создание нашего стартапа',
-                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
-                        }
-                    ]
-                },
-                {
-                    title: '9 февраля',
-                    data: [
-                        {
-                            id: 3,
-                            header: 'Стартап дня',
-                            content: 'Встречайте приложение на IOS',
-                            footer: 'История создание нашего стартапа',
-                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
-                        },
-                        {
-                            id: 5,
-                            header: 'Стартап дня',
-                            content: 'Встречайте приложение на IOS',
-                            footer: 'История создание нашего стартапа',
-                            img: 'https://medialeaks.ru/wp-content/uploads/2017/02/ad_234085936-419x419.jpg'
-                        }
-                    ]
-                }
-            ]
+            sectionData: [],
+            refreshing: false
         }
     }
 
@@ -78,6 +42,7 @@ class FeedPage extends Component {
             handleSearch: this.search,
             handleAdd: this.add
         });
+        this.getFeeds();
     }
 
     search = () => {
@@ -86,20 +51,45 @@ class FeedPage extends Component {
     }
 
     renderItem = ({ item }) => (
-        <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate("FeedStackFeedInfo",{img: item.img, name: item.content, footer: item.footer})}}>
+        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("FeedStackFeedInfo", { img: item.image, name: item.title, footer: item.description }) }}>
             <RkCard style={{ marginBottom: 10, height: window.height / 1.7, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
-                <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 1.7, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 1.7, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.image }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>
-                        <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
-                        <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>Новость дня</Text>
+                        <Text style={{ color: 'white', fontSize: 30 }}>{item.title}</Text>
                     </View>
                     <View rkCardFooter>
-                        <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                        <Text style={{ color: 'white', fontSize: 17 }}>{item.description}</Text>
                     </View>
                 </ImageBackground>
             </RkCard>
         </TouchableHighlight>
     );
+
+    getFeeds = async () => {
+        this.setState({ sectionData: [], refreshing: true })
+        try {
+            let arr = []
+            let db = firebase.firestore()
+            const querySnapshot = await db.collection("news").get()
+            querySnapshot.forEach((doc) => {
+                arr.push({
+                    ...doc.data(),
+                    id: doc.id
+                })
+            })
+            this.state.sectionData.push({
+                section: "Сегодня",
+                data: arr
+            })
+            this.setState({ sectionData: this.state.sectionData, refreshing: false })
+        } catch (err) {
+            this.setState({refreshing: false})
+            alert('Произошла неизвестная ошибка. Попробуйте заново');
+            console.error(err)
+            return false
+        }
+    }
 
     render() {
         const { navigate } = this.props.navigation
@@ -110,9 +100,11 @@ class FeedPage extends Component {
                 sections={this.state.sectionData}
                 extraData={this.state}
                 keyExtractor={this.keyExtractor}
+                onRefresh={this.getFeeds}
+                refreshing={this.state.refreshing}
                 renderItem={this.renderItem}
                 renderSectionHeader={
-                    ({ section }) => <Text style={{ fontSize: 30 }}>{section.title}</Text>
+                    ({ section }) => <Text style={{ fontSize: 30 }}>{section.section}</Text>
                 }
                 containerStyle={{ paddingBottom: 10 }}
             />
