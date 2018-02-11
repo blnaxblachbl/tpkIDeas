@@ -44,23 +44,23 @@ class ProfilePage extends Component {
             surname: "",
             specialization: "",
             status: "",
-            about: "",
-            photo: ""
+            photo: "",
+            refreshing: false
         };
     }
 
     componentDidMount() {
-        if (this.state.about.length > 150) {
-            this.setState({ contentFullVisible: false })
-        } else {
-            this.setState({ contentFullVisible: true })
-        }
         this.props.navigation.setParams({
             handleSearch: this.search,
             handleAdd: this.add
         });
+        this.getMyData()
+    }
+
+    getMyData = () => {
         AsyncStorage.getItem('uid')
             .then((uid) => {
+                this.setState({ refreshing: true })
                 if (uid != null) {
                     firebase.firestore().collection("users").doc(uid).get()
                         .then((data) => {
@@ -71,7 +71,7 @@ class ProfilePage extends Component {
                                 specialization: json.spels,
                                 status: json.status,
                                 about: json.about,
-                                photo: json.photo,
+                                photo: json.photo != undefined ? json.photo : 'http://cs319323.vk.me/v319323049/70e1/2gddfIt0mvc.jpg',
                             })
                         })
                     this.getMyIdeas()
@@ -98,8 +98,10 @@ class ProfilePage extends Component {
                 data: ideas
             })
             ideas = [];
+            this.setState({ refreshing: false })
         } catch (err) {
             alert(err)
+            this.setState({ refreshing: false })
             return false
         }
     }
@@ -114,18 +116,19 @@ class ProfilePage extends Component {
         return (
             <View style={{ height: "auto" }}>
                 <View style={styles.profileHeader}>
-                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.photo != undefined ? this.state.photo : 'http://cs319323.vk.me/v319323049/70e1/2gddfIt0mvc.jpg' }} />
+                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.photo }} />
                     <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 14 }}>{this.state.name + " " + this.state.surname}</Text>
                         <Text style={{ fontSize: 14 }}>{this.state.specialization}</Text>
-                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile', { img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg', name: this.state.name, surname: this.state.surname, about: this.state.about, specialization: this.state.specialization }) }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
+                        <Text style={{ fontSize: 14 }}>{this.state.status}</Text>
+                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile', { img: this.state.photo, name: this.state.name, surname: this.state.surname, about: this.state.about, specialization: this.state.specialization, status: this.state.status }) }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
                             Редактировать
                         </RkButton>
                     </View>
                 </View>
                 <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
                 {this.htmlRed()}
-                <Text style={{ margin: 10, fontSize: 14, fontWeight: "bold" }}>Мои идеи</Text>
+                <Text style={{ margin: 10, fontSize: 14, fontWeight: "bold" }}>{this.state.data.length != 0 ? "Мои идеи" : " "}</Text>
             </View>
         )
     }
@@ -162,6 +165,8 @@ class ProfilePage extends Component {
                 data={this.state.data}
                 extraData={this.state}
                 keyExtractor={this.keyExtractor}
+                onRefresh={this.getMyData}
+                refreshing={this.state.refreshing}
                 ListHeaderComponent={this.renderHeader}
                 renderItem={this.renderItem}
                 ccontentContainerStyle={{ marginBottom: 50 }}

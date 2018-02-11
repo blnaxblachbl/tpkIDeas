@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, FlatList, ImageBackground, Image, Dimensions, ScrollView, AsyncStorage } from 'react-native';
 import { RkCard, RkButton, RkTextInput } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { ImagePicker } from 'expo';
+import firebase from 'firebase';
+import 'firebase/firestore'
 
 const window = Dimensions.get('window');
 
@@ -17,7 +19,13 @@ class ProfileEditPage extends Component {
             surname: "",
             specialization: "",
             about: "",
-            img: " "
+            img: " ",
+            status: "",
+            loading: false,
+            info: null,
+            isImagePicked: false,
+            loading: false,
+            base64: ''
         }
     }
 
@@ -26,22 +34,72 @@ class ProfileEditPage extends Component {
         this.setState({
             name: params.name,
             surname: params.surname,
-            specialization: params.specialization,
+            specialization: params.specialization.toString(),
             about: params.about,
-            img: params.img
+            status: params.status,
+            img: params.img,
+            isImagePicked: false
         })
+
     }
 
     pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
             aspect: [4, 3],
+            base64: true
         });
 
         if (!result.cancelled) {
-            this.setState({ img: result.uri });
+            this.setState({ img: result.uri, isImagePicked: true, base64: result.base64 });
+            //alert(JSON.stringify(this.state.base64))
         } else {
             alert("error")
+        }
+    }
+
+    setUserData = async () => {
+        try {
+            let data = {
+                name: this.state.name,
+                surname: this.state.surname,
+                status: this.state.status,
+                spels: [this.state.specialization]
+            }
+            let uid = await AsyncStorage.getItem('uid');
+            let db = firebase.firestore()
+            await db.collection("users").doc(uid).set(data, { merge: true })
+            this.setState({ loading: false });
+            alert("ok")
+        } catch (err) {
+            this.setState({ loading: false });
+            this.error = 'Произошла неизвестная ошибка. Попробуйте заново'
+            console.error(err)
+        }
+    }
+
+    setUserPhoto = async () => {
+        this.setState({ loading: true });
+        try {
+            let uid = await AsyncStorage.getItem('uid');
+            let storageRef = firebase.storage().ref()
+            let photoRef = storageRef.child(uid + '/avatar.jpg')
+            const url = await photoRef.putString(this.state.base64, 'base64');
+            let db = firebase.firestore()
+            await db.collection("users").doc(uid).set({ photo: url.downloadURL }, { merge: true })
+            this.setUserData();
+        } catch (err) {
+            this.error = 'Произошла неизвестная ошибка. Попробуйте заново'
+            console.error(err)
+        }
+    }
+
+    save = () => {
+        if (this.state.isImagePicked) {
+            this.setUserPhoto();
+        } else {
+            this.setState({ loading: true });
+            this.setUserData();
         }
     }
 
@@ -93,6 +151,18 @@ class ProfileEditPage extends Component {
                     autoCorrect={false}
                     style={{ height: 50 }}
                 />
+                <RkTextInput
+                    rkType='rounded'
+                    onChangeText={(text) => { this.setState({ status: text }) }}
+                    placeholder='Статус'
+                    inputStyle={{
+                        backgroundColor: 'transparent',
+                        color: 'black',
+                    }}
+                    value={this.state.status}
+                    autoCorrect={false}
+                    style={{ height: 50 }}
+                />
                 <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
                 <RkTextInput
                     rkType='rounded'
@@ -107,7 +177,7 @@ class ProfileEditPage extends Component {
                     multiline={true}
                     style={{ borderRadius: 15, borderWidth: 0.3, borderBottomWidth: 0.3 }}
                 />
-                <RkButton rkType='outline' style={{ height: 50, marginTop: 20, marginBottom: 20, backgroundColor: 'transparent', width: '100%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { }}>
+                <RkButton rkType='outline' style={{ height: 50, marginTop: 20, marginBottom: 20, backgroundColor: 'transparent', width: '100%', borderColor: 'red', borderRadius: 30 }} contentStyle={{ color: 'black' }} onPress={() => { this.save() }}>
                     Сохранить изменения
                 </RkButton>
             </ScrollView>
