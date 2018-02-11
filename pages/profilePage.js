@@ -36,36 +36,7 @@ class ProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    id: 0,
-                    header: 'Idea name',
-                    content: 'Idea content',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 1,
-                    header: 'Idea name',
-                    content: 'Idea contentlol',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 2,
-                    header: 'Idea name',
-                    content: 'Idea content',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                },
-                {
-                    id: 3,
-                    header: 'Idea name',
-                    content: 'Idea content',
-                    footer: 'Idea footer',
-                    img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg'
-                }
-            ],
+            data: [],
             profilrHeaderHeight: 300,
             about: "",
             contentFullVisible: true,
@@ -89,22 +60,48 @@ class ProfilePage extends Component {
             handleAdd: this.add
         });
         AsyncStorage.getItem('uid')
-            .then((uid)=>{
+            .then((uid) => {
                 if (uid != null) {
                     firebase.firestore().collection("users").doc(uid).get()
-                    .then((data)=>{
-                        let json = data.data()
-                        this.setState({
-                            name: json.name,
-                            surname: json.surname,
-                            specialization: json.spels,
-                            status: json.status,
-                            about: json.about,
-                            photo: json.photo,
+                        .then((data) => {
+                            let json = data.data()
+                            this.setState({
+                                name: json.name,
+                                surname: json.surname,
+                                specialization: json.spels,
+                                status: json.status,
+                                about: json.about,
+                                photo: json.photo,
+                            })
                         })
-                    })
+                    this.getMyIdeas()
                 }
             })
+    }
+
+    getMyIdeas = async () => {
+        try {
+            this.setState({
+                data: []
+            })
+            let id = await AsyncStorage.getItem('uid');
+            let db = firebase.firestore()
+            let ideas = []
+            let querySnapshot = await db.collection("projects").where("uid", "==", id).get()
+            querySnapshot.forEach((doc) => {
+                ideas.push({
+                    ...doc.data(),
+                    id: doc.id,
+                })
+            })
+            this.setState({
+                data: ideas
+            })
+            ideas = [];
+        } catch (err) {
+            alert(err)
+            return false
+        }
     }
 
     fullContent = () => {
@@ -117,34 +114,40 @@ class ProfilePage extends Component {
         return (
             <View style={{ height: "auto" }}>
                 <View style={styles.profileHeader}>
-                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.photo }} />
+                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.photo != undefined ? this.state.photo : 'http://cs319323.vk.me/v319323049/70e1/2gddfIt0mvc.jpg' }} />
                     <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 14 }}>{this.state.name + " " + this.state.surname}</Text>
                         <Text style={{ fontSize: 14 }}>{this.state.specialization}</Text>
-                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile',{img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg', name: this.state.name, surname: this.state.surname, about: this.state.about, specialization: this.state.specialization}) }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
+                        <RkButton rkType='outline' onPress={() => { this.props.navigation.navigate('EditProfile', { img: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg', name: this.state.name, surname: this.state.surname, about: this.state.about, specialization: this.state.specialization }) }} style={{ height: 30, marginTop: 10, backgroundColor: 'transparent', width: '90%', borderColor: 'black', borderRadius: 30 }} contentStyle={{ color: 'black' }}>
                             Редактировать
                         </RkButton>
                     </View>
                 </View>
                 <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
-                <HTML html={this.state.about} imagesMaxWidth={window.width} />
+                {this.htmlRed()}
                 <Text style={{ margin: 10, fontSize: 14, fontWeight: "bold" }}>Мои идеи</Text>
             </View>
         )
     }
 
+    htmlRed = () => {
+        if (this.state.about) {
+            return (
+                <HTML html={this.state.about} imagesMaxWidth={window.width} />
+            )
+        } else {
+            return <Text style={{ marginLeft: 10 }}>Пока нет</Text>
+        }
+    }
+
     keyExtractor = (item, index) => item.id;
 
     renderItem = ({ item }) => (
-        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.img, name: item.header, content: item.content }) }}>
+        <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.image, name: item.title, comments: item.comments, content: item.description, team: item.team }) }}>
             <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
-                <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.img }}>
+                <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.image }}>
                     <View style={{ flexDirection: 'column' }} rkCardHeader>
-                        <Text style={{ color: 'white', fontSize: 20 }}>{item.header}</Text>
-                        <Text style={{ color: 'white', fontSize: 30 }}>{item.content}</Text>
-                    </View>
-                    <View rkCardFooter>
-                        <Text style={{ color: 'white', fontSize: 17 }}>{item.footer}</Text>
+                        <Text style={{ color: 'white', fontSize: 20 }}>{item.title}</Text>
                     </View>
                 </ImageBackground>
             </RkCard>
