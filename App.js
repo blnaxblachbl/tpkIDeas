@@ -9,6 +9,6 @@ export default class App extends React.Component {
       <Provider {...store}>
         <Stack />
       </Provider>
-    );
+    );// Подключение Store инизиализация приложение
   }
 }
