@@ -107,14 +107,6 @@ class ProfileEditPage extends Component {
         const { navigate } = this.props.navigation
         return (
             <ScrollView style={{ flex: 1, backgroundColor: "#fff", padding: 10, paddingBottom: 80 }}>
-                <TouchableHighlight onPress={() => { this.pickImage() }} underlayColor="transparent">
-                    <View style={styles.profileHeader}>
-                        <Image style={{ height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.img }} />
-                        <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
-                            <Text style={{ fontSize: 14 }}>Изменить фото профиля</Text>
-                        </View>
-                    </View>
-                </TouchableHighlight>
                 <RkTextInput
                     rkType='rounded'
                     onChangeText={(text) => { this.setState({ name: text }) }}
