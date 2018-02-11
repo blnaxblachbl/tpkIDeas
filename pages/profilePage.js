@@ -4,6 +4,7 @@ import { RkCard, RkButton } from 'react-native-ui-kitten';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import firebase from 'firebase';
 import 'firebase/firestore'
+import HTML from 'react-native-render-html';
 
 const window = Dimensions.get('window');
 
@@ -66,11 +67,11 @@ class ProfilePage extends Component {
                 }
             ],
             profilrHeaderHeight: 300,
-            about: "Обо мне лофытвлофытволфытволфытвдлтфылвдфыдвьфылвьфывьфылдвaskdmaskldmaskdmasmdasmkdmkaslmdaskmdkasmldaslkdmaskldmaskldmlasmdlasmdasmdamsdlmaslaksmdьфыдлвьфыдлвьфылдвьдфыльвдфыьвдфыьвдфьльфыв флыдьвдфыьвлфыьв ьфлвьфы львфьы лвьфдылв",
+            about: "",
             contentFullVisible: true,
-            name: "My name",
-            surname: "My surname",
-            specialization: "My specialization",
+            name: "",
+            surname: "",
+            specialization: "",
             status: "",
             about: "",
             photo: ""
@@ -116,7 +117,7 @@ class ProfilePage extends Component {
         return (
             <View style={{ height: "auto" }}>
                 <View style={styles.profileHeader}>
-                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: 'https://pp.userapi.com/c631831/v631831119/3f148/QM5N25RTsTU.jpg' }} />
+                    <Image style={{ marginLeft: 10, height: 90, width: 90, borderRadius: 45 }} source={{ uri: this.state.photo }} />
                     <View style={{ paddingLeft: 10, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 14 }}>{this.state.name + " " + this.state.surname}</Text>
                         <Text style={{ fontSize: 14 }}>{this.state.specialization}</Text>
@@ -126,7 +127,7 @@ class ProfilePage extends Component {
                     </View>
                 </View>
                 <Text style={{ margin: 10, fontSize: 14, paddingTop: 25, fontWeight: "bold" }}>Обо мне</Text>
-                <Text onPress={() => { this.fullContent() }} style={{ margin: 10, fontSize: 14 }}>{!this.state.contentFullVisible ? this.state.about.slice(0, 150) + " [Еще...]" : this.state.about}</Text>
+                <HTML html={this.state.about} imagesMaxWidth={window.width} />
                 <Text style={{ margin: 10, fontSize: 14, fontWeight: "bold" }}>Мои идеи</Text>
             </View>
         )
