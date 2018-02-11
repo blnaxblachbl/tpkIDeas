@@ -149,7 +149,7 @@ class ProfilePage extends Component {
         <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.image, name: item.title, comments: item.comments, content: item.description, team: item.team }) }}>
             <RkCard style={{ marginBottom: 10, height: window.height / 3, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 3, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.image }}>
-                    <View style={{ flexDirection: 'column' }} rkCardHeader>
+                    <View style={{ flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.2)', height: window.height / 3 }} rkCardHeader>
                         <Text style={{ color: 'white', fontSize: 20 }}>{item.title}</Text>
                     </View>
                 </ImageBackground>

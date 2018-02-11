@@ -57,7 +57,7 @@ class IdeasPage extends Component {
         <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("IdeaInfoTab", { img: item.image, name: item.title, comments: item.comments, content: item.description, team: item.team }) }}>
             <RkCard style={{ margin: 5, height: 150, width: 200, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: 150, width: 200, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.image }}>
-                    <View style={{ flexDirection: 'column' }} rkCardHeader>
+                    <View style={{ flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.2)', height: 150, width: 200, }} rkCardHeader>
                         <Text style={{ color: 'white', fontSize: 20 }}>{item.title}</Text>
                     </View>
                 </ImageBackground>
@@ -110,7 +110,7 @@ class IdeasPage extends Component {
             })
             // console.log(JSON.stringify(arr.reverse()))
         } catch (err) {
-            this.setState({refreshing: false})
+            this.setState({ refreshing: false })
             alert('Произошла неизвестная ошибка. Попробуйте заново');
             console.error(err)
             return false

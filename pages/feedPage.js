@@ -53,12 +53,9 @@ class FeedPage extends Component {
         <TouchableHighlight underlayColor="transparent" onPress={() => { this.props.navigation.navigate("FeedStackFeedInfo", { img: item.image, name: item.title, footer: item.description }) }}>
             <RkCard style={{ marginBottom: 10, height: window.height / 1.7, justifyContent: 'space-between', borderRadius: 20, overflow: 'hidden' }}>
                 <ImageBackground style={{ justifyContent: 'space-between', height: window.height / 1.7, borderRadius: 20, overflow: 'hidden' }} source={{ uri: item.image }}>
-                    <View style={{ flexDirection: 'column' }} rkCardHeader>
+                    <View style={{ flexDirection: 'column', backgroundColor:'rgba(0,0,0,0.2)', height: window.height / 1.7 }} rkCardHeader>
                         <Text style={{ color: 'white', fontSize: 20 }}>Новость дня</Text>
                         <Text style={{ color: 'white', fontSize: 30 }}>{item.title}</Text>
-                    </View>
-                    <View rkCardFooter>
-                        <Text style={{ color: 'white', fontSize: 17 }}>{item.description}</Text>
                     </View>
                 </ImageBackground>
             </RkCard>
@@ -72,7 +69,7 @@ class FeedPage extends Component {
             let db = firebase.firestore()
             const querySnapshot = await db.collection("news").get()
             querySnapshot.forEach((doc) => {
-                arr.push({
+                arr.unshift({
                     ...doc.data(),
                     id: doc.id
                 })
@@ -83,7 +80,7 @@ class FeedPage extends Component {
             })
             this.setState({ sectionData: this.state.sectionData, refreshing: false })
         } catch (err) {
-            this.setState({refreshing: false})
+            this.setState({ refreshing: false })
             alert('Произошла неизвестная ошибка. Попробуйте заново');
             console.error(err)
             return false
