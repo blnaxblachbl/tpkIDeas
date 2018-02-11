@@ -21,7 +21,6 @@ class FeedPage extends Component {
                 <Icon name="search" style={{ marginLeft: 15 }} size={30} color={"black"} onPress={() => params.handleSearch()} />
             ),
             headerRight: (
-                //<Icon name="plus" style={{ marginRight: 15 }} size={30} color={"black"} onPress={() => params.handleAdd()} />
                 <View style={{ marginRight: 15, backgroundColor: "transparent", width: 30 }} />
             )
         }

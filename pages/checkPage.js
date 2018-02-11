@@ -17,7 +17,7 @@ class CheckPage extends Component {
             storageBucket: "idea-bag.appspot.com",
             messagingSenderId: "183868654064",
             debug: true
-        });
+        }); // инициализация базы данных
         AsyncStorage.getItem('uid')
         .then((data)=>{
             if(data != null) {
@@ -25,7 +25,7 @@ class CheckPage extends Component {
             } else {
                 navigate("LoginPage")
             }
-        })
+        }) // проверка на авторизацию
     }
 
     render() {
