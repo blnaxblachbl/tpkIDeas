@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, Text, View, TouchableHighlight, Image, SectionList, ImageBackground, Dimensions, FlatList } from 'react-native';
 import { RkCard } from 'react-native-ui-kitten';
+import HTML from 'react-native-render-html';
+
 
 const window = Dimensions.get('window');
 
@@ -101,15 +103,15 @@ class IdeaInfo extends Component {
     keyExtractor = (item, index) => item.id;
 
     renderUsers = ({ item }) => (
-        <Image source={{ uri: item.img }} style={{ height: 50, width: 50, borderRadius: 25, marginLeft: 5, marginRight: 5 }} />
+        <Image source={{ uri: item.photo }} style={{ height: 50, width: 50, borderRadius: 25, marginLeft: 5, marginRight: 5 }} />
     );
 
     renderComments = ({ item }) => (
-        <View style={{ marginBottom: 15, flexDirection: "row", borderColor: "grey", borderBottomWidth: 0.5, width: "100%" }}>
-            <Image style={{ height: 50, width: 50, borderRadius: 25, overflow: "hidden" }} source={{ uri: item.img }} />
+        <View style={{ paddingBottom: 5, paddingTop: 5, flexDirection: "row", borderColor: "grey", borderBottomWidth: 0.5, width: "100%" }}>
+            <Image style={{ height: 50, width: 50, borderRadius: 25, overflow: "hidden" }} source={{ uri: item.photo }} />
             <View style={{ marginLeft: 10, marginBottom: 15, justifyContent: "center", width: "100%" }}>
-                <Text>{item.name + " " + item.surname}</Text>
-                <Text style={{ fontWeight: "bold", width: "100%", height: "auto", minHeight: 10 }}>{item.message}</Text>
+                <Text>{item.username}</Text>
+                <Text style={{ fontWeight: "bold", width: "100%", height: "auto", minHeight: 10 }}>{item.text}</Text>
             </View>
         </View>
     )
@@ -121,13 +123,13 @@ class IdeaInfo extends Component {
                 <View style={{ alignItems: "center", backgroundColor: "#fff" }}>
                     <Image source={{ uri: params.img }} resizeMode="cover" style={{ width: window.width, height: window.height / 2.5 }} />
                     <Text style={{ padding: 10, width: "100%", fontSize: 22 }}>{params.name}</Text>
-                    <Text style={{ padding: 10, width: "100%" }}>{params.content}</Text>
+                    <HTML html={params.content} imagesMaxWidth={window.width-10} />
                     <Text style={{ padding: 10, width: "100%", fontWeight: "bold", fontSize: 22 }}>Участники</Text>
                     <View style={{ height: 60, width: window.width, alignItems: "center" }}>
                         <FlatList
                             horizontal={true}
                             style={styles.flatContainer}
-                            data={this.state.users}
+                            data={params.team}
                             extraData={this.state}
                             keyExtractor={this.keyExtractor}
                             renderItem={this.renderUsers}
@@ -140,7 +142,7 @@ class IdeaInfo extends Component {
                     <View style={{ padding: 10, width: window.width }}>
                         <FlatList
                             style={styles.commentsFlatContainer}
-                            data={this.state.messages}
+                            data={params.comments}
                             extraData={this.state}
                             keyExtractor={this.keyExtractor}
                             renderItem={this.renderComments}
